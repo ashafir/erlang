@@ -1,0 +1,9 @@
+{% extends "base.dtl" %}
+
+{% block queryform %}
+{% include "queryform" %}
+{% endblock %}
+
+{% block results %}
+{% include "results" %}
+{% endblock %}

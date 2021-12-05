@@ -1,0 +1,42 @@
+-record(parm,
+        {
+          action = "all",
+          status = "all",
+          date1 = qdate:to_string("Y-01-01"),
+          date2 = qdate:to_string("Y-m-d"),
+          project = [],
+          draw = [],
+          user = [],
+          org = [],
+          nrec   = 32
+        }).
+
+-record(job,
+        {jobid,
+         action,
+         status,
+         datecreated,
+         datestarted,
+         datecompleted,
+         timeelapsed,
+         timeexecuted,
+         username,
+         orgname,
+         projectnumber,
+         projectname,
+         drawnumber,
+         content,
+         audit}).
+
+-record(jobq,
+        {jobid,
+         orgid,
+         userid,
+         action,
+         projid,
+         drawid,
+         ppids,
+         filename,
+         fiscalmonth,
+         paymentdate,
+         taskid}).

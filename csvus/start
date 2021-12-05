@@ -1,0 +1,8 @@
+#!/bin/bash
+cd `dirname $0`
+erl -sname csvus \
+    -pa $PWD/ebin $PWD/deps/*/ebin \
+    -s lager \
+    -s reloader \
+    -config csvus.config \
+    -run csvus

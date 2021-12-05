@@ -1,0 +1,38 @@
+-module(pgtest).
+
+-export([init/0,test/0]).
+
+init() ->
+    application:start(public_key),
+    application:start(ssl),
+    application:start(crypto),
+    application:start(epgsql),
+    application:start(epgsql_pool).
+
+
+test() -> 
+	%% {ok,C} = pgsql:connect("localhost","alex","password",[{database,"alex"}]),
+	%% {ok,C} = pgsql:connect("nadia","acohen","password",[{database,"acohen"}]),
+    {ok,C} = pgsql_pool:get_connection(nadia),
+    %% Result = pgsql:equery(C,"begin;select count(*) from contract;commit;"),
+ 
+    %% A = pgsql:squery(C,"begin;select \"VendorOrgID\",\"VendorName\" from GetVendors(8974,'concrete');end;"),
+    %% io:format("~p~n",[A]),
+ 
+    %% B = pgsql:squery(C,"select \"VendorOrgID\",\"VendorName\" from GetVendors(8974,'999');"),
+    %% io:format("~p~n",[B]),
+    
+    Call = pgsql:equery(C,"select * from GetVendors($1);",[8974]),
+    io:format("~p~n",[Call]),
+
+    %% Fetch1 = pgsql:squery(C,"fetch all from \"result1\""),
+    %% io:format("~p~n",[Fetch1]),
+
+    %% Fetch2 = pgsql:squery(C,"fetch all from \"result2\""),
+    %% io:format("~p~n",[Fetch2]),
+
+    %% End = pgsql:squery(C,"end;"),
+    %% io:format("~p~n",[End]),
+    
+	pgsql:close(C),
+    ok.

@@ -1,0 +1,3 @@
+-sname  zurich
+-boot   /home/alex/erlang/zurich/release/zurich
+-config /home/alex/erlang/zurich/release/zurich

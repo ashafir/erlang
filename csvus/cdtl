@@ -1,0 +1,32 @@
+#!/usr/bin/escript
+%% -*- erlang -*-
+
+-export([main/1]).
+
+-include("include/jobs.hrl").
+
+main(Names) ->
+    code:add_patha("deps/merl/ebin"),
+    code:add_patha("deps/erlydtl/ebin"),
+    Options = [
+               {out_dir, "ebin"},
+               report,
+               {record_info,
+                [
+                 {parm, record_info(fields, parm)},
+                 {job, record_info(fields, job)}
+                ]
+               }
+              ],
+    compile(Names, Options).
+
+compile([], _) ->
+    ok;
+compile([H|T], Options) ->
+    Module = list_to_atom(string:to_lower(H ++ "_" ++ "dtl")),
+    File = "templates/" ++ H ++ ".dtl",
+    io:format("~p~n", [File]),
+    io:format("~p~n", [Module]),
+    io:format("~p~n", [Options]),
+    erlydtl:compile_file(File, Module, Options),
+    compile(T, Options).
